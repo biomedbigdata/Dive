@@ -543,7 +543,9 @@ export class DeepBlueService {
 
     removeSelectedBiosource(biosource: BioSource) {
         let bs = this.selectedBioSources.value;
-        let index = bs.indexOf(biosource);
+        let index = bs.map(function (e) {
+            return e.key();
+        }).indexOf(biosource.key())
         if (index >= -1) {
             bs.splice(index, 1);
             this.selectedBioSources.next(bs);
