@@ -4,19 +4,32 @@
 
       <div *ngIf="!finished" class="ui-g-2">
         <h2>Selected Data </h2>
-        <h4 style="word-wrap: break-word">{{ background?.text() }}</h4>
-        <h4>{{ getDatasetsLabel() }}</h4>
-        <h4>{{ selected_datasets }}</h4>
+        <p-fieldset legend="Background">
+          <div class="ui-g-10" style="word-wrap: break-word">{{ background?.text() }}</div>
+        </p-fieldset>
+        <!--<p-fieldset legend="Datasets">
+          <div class="ui-g-10" style="word-wrap: break-word">{{ getDatasetsLabel() }}</div>
+          <div class="ui-g-10" style="word-wrap: break-word">{{ selected_datasets }}</div>
+        </p-fieldset>-->
+        <p-fieldset legend="Datasets"> <!--*ngIf="selected_datasets.length > 0"-->
+<!--          TODO: print selected datasets right-->
+          <div class="ui-g" *ngFor="let c of selected_datasets">
+            <div style="word-wrap: break-word" class="ui-g-8"> {{ c[0] }}</div>
+            <!--<div class="ui-g-offset-1 ui-g-1">
+              <button pButton type="button" icon="fa fa-fw fa-close" (click)="removeComparison(c)"></button>
+            </div>-->
+          </div>
+        </p-fieldset>
       </div>
 
       <div class="{{ wizardClassLength() }}">
         <aw-wizard #wizard [navBarLocation]="'top'" [navBarLayout]="'small'">
 
           <!-- Introduction -->
-          <aw-wizard-step stepTitle="Overlapping Enrichment" (stepEnter)="inWizard($event)">
+          <aw-wizard-step stepTitle="Overlap Enrichment" (stepEnter)="inWizard($event)">
             <navegation-menu [disablePrevious]="true"></navegation-menu>
-            <p-fieldset legend="Welcome">
-              We are going to perform overlapping enrichment
+            <p-fieldset legend="Welcome to Overlap Enrichment">
+              <h2>We are going to perform overlap enrichment.</h2>
             </p-fieldset>
           </aw-wizard-step>
 
@@ -33,14 +46,10 @@
             </p-toolbar>
 
 
-            <p>Select background data</p>
-            <!--
-            <p>
-              <small>background is blablabla</small>
-            </p>
-            -->
-            <h3 *ngIf="!background">Select the background data</h3>
-            <data-selection-main (queryIdSelected)="selectBackgroud($event)"></data-selection-main>
+            <p-fieldset legend="Select Background Data">
+              <h2>Please select the background data you want to use.</h2>
+              <data-selection-main (queryIdSelected)="selectBackgroud($event)"></data-selection-main>
+            </p-fieldset>
           </aw-wizard-step>
 
           <!-- Datasets -->

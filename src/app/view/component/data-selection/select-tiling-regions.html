@@ -1,17 +1,35 @@
-<button pButton type="button" (click)="select_click()" label="Select tiling regions with {{ size }} base pairs"></button>
+<h4>Select Tiling Regions</h4>
+<div class="container">
+    <p>Use tiling regions with a custom size across the whole genome.</p>
+    <div class="ui-g">
+        <div class="ui-g-12">
+            <div class="card">
+                <p-inplace #inplace [active]="false" [style]="{'min-height':'30px'}" closable="closable">
 
-<p-inplace #inplace closable="closable" [style]="{'min-height':'30px'}" [active]="false">
   <span pInplaceDisplay>
     {{ size?.toLocaleString() }}bp (click to edit)
   </span>
-  <span pInplaceContent>
-    <input type="text" [ngModel]="size" type="number" (ngModelChange)="size = $event"(keyup.enter)="onEnter($event)"/>
-
+                    <span pInplaceContent>
+                    <input (keyup.enter)="onEnter($event)" (ngModelChange)="size = $event" [ngModel]="size" type="text"
+                           type="number"/>
   </span>
-</p-inplace>
+                </p-inplace>
 
 
-<p>
-  <p-slider [(ngModel)]="size" [animate]=true [step]="500" [min]="min" [max]="max">
-  </p-slider>
-</p>
+                <p>
+                    <p-slider [(ngModel)]="size" [animate]=true [max]="max" [min]="min" [step]="500">
+                    </p-slider>
+                </p>
+                <div class="ui-g">
+                    <div class="ui-g-6">
+                        <div class="ui-toolbar-group-left">
+                            <button (click)="select_click()" label="Select tiling regions with {{ size }} base pairs"
+                                    pButton
+                                    type="button"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

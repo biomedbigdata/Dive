@@ -3,22 +3,31 @@
     <div class="ui-g">
       <div *ngIf="finished == false" class="ui-g-2">
         <h2>Selected Data </h2>
-        <h4>{{ getGenomeLabel() }}</h4>
-        <h4>{{ getProjectsLabel() }}</h4>
-        <h4 style="word-wrap: break-word">{{ getQueryLabel() }}</h4>
+        <p-fieldset legend="Genome">
+            <div class="ui-g-10">{{ getGenomeLabel() }}</div>
+        </p-fieldset>
+        <p-fieldset legend="Projects">
+          <div class="ui-g" *ngFor="let c of getProjectsLabel()">
+            <div class="ui-g-10">{{ c }}</div>
+          </div>
+        </p-fieldset>
+        <p-fieldset legend="Query">
+          <div style="word-wrap: break-word" class="ui-g-10">{{ getQueryLabel() }}</div>
+        </p-fieldset>
+
 
         <p-fieldset *ngIf="getSelectedBioSources().length > 0" legend="BioSources">
           <div class="ui-g" *ngFor="let c of getSelectedBioSources()">
             <div class="ui-g-8">{{ c }}</div>
             <div class="ui-g-offset-1 ui-g-1">
-              <button pButton type="button" icon="fa fa-fw fa-close" (click)="removeBioSource(c[0])"></button>
+              <button pButton type="button" icon="fa fa-fw fa-close" (click)="removeBioSource(c)"></button>
             </div>
           </div>
         </p-fieldset>
 
         <p-fieldset *ngIf="selectedComparison.length > 0" legend="To Compare">
           <div class="ui-g" *ngFor="let c of selectedComparison">
-            <div style="word-wrap: break-word" class="ui-g-4  ">{{ c.text() }}</div>
+            <div style="word-wrap: break-word" class="ui-g-8"> {{ c.text() }}</div>
             <div class="ui-g-offset-1 ui-g-1">
               <button pButton type="button" icon="fa fa-fw fa-close" (click)="removeComparison(c)"></button>
             </div>
@@ -33,8 +42,12 @@
 
             <navegation-menu [disablePrevious]="true"></navegation-menu>
 
-            <p-fieldset legend="Welcome">
-              Welcome to Dive, here we will guide you to select the data that you want to analyze.
+            <p-fieldset legend="Welcome to DIVE">
+              <h1>Welcome to Dive - Data-driven Interactive and Visual analysis of Epigenomes</h1>
+              DIVE grants access to large-scale epigenomic data via the DeepBlue Server API.
+              <br>It provides a comprehensive, dynamic, and visual interface that does not require the user to have any programming skills.
+              <br>
+              <h2 style="color: #0277BD;">First, we will guide you to select the data that you want to analyze.</h2>
             </p-fieldset>
 
 
@@ -44,9 +57,10 @@
             <navegation-menu></navegation-menu>
 
             <p-fieldset legend="Select Genome">
+              <h2>Please select the reference genome you want to use.</h2>
               <div class="ui-inputgroup">
                 <span class="ui-inputgroup-addon" style="border-style: none">Genome</span>
-                <p-dropdown #genomesDropdown [options]="genomeItems" [style]="{'width':'75px'}" (onChange)="selectGenome($event)" [(ngModel)]="selectedGenome"></p-dropdown>
+                <p-dropdown #genomesDropdown [options]="genomeItems" [style]="{'width':'100px'}" (onChange)="selectGenome($event)" [(ngModel)]="selectedGenome"></p-dropdown>
               </div>
             </p-fieldset>
 
@@ -55,7 +69,8 @@
           <aw-wizard-step stepTitle="Select Projects" (stepEnter)="inWizard($event)">
             <navegation-menu></navegation-menu>
 
-            <p-fieldset legend="Select Genome">
+            <p-fieldset legend="Select Projects">
+              <h2>Please select the epigenome projects you want to choose from.</h2>
               <div class="ui-inputgroup">
                 <span class="ui-inputgroup-addon" style="border-style: none">Projects</span>
                 <p-multiSelect #multiselect [defaultLabel]="defaultSelectProjects" [options]="projectItems" [(ngModel)]="selectedProjects"
@@ -69,6 +84,7 @@
             <navegation-menu></navegation-menu>
 
             <p-fieldset legend="Select Query Dataset">
+              <h2>Please select the query dataset you want to analyze and compare to other datasets.</h2>
               <data-selection-main (queryIdSelected)="selectQueryDataSet($event)"></data-selection-main>
             </p-fieldset>
 
@@ -81,8 +97,8 @@
 
             <p-fieldset legend="Interesting BioSources">
               <div class="ui-g">
-                <div class="ui-g-6">
-                  <h2 *ngIf="progress_element.isLoading()">Analyzing dataset and searching for similar biosources...
+                <div class="ui-g-8">
+                  <h2 style="color: #03A9F4;" *ngIf="progress_element.isLoading()">Analyzing dataset and searching for similar biosources... <br>
                     <small>You can jump to the next step</small>
                   </h2>
 
@@ -104,7 +120,7 @@
               </div>
             -->
 
-                  <h3>Include similar biosources:</h3>
+                  <h2>Include similar biosources:</h2>
                   <input type='text' style='padding:8px;margin:15px auto;width:60%;' placeholder='Type to filter biosources' [(ngModel)]="filterSimilarText"
                   />
                   <div *ngIf="getSimilarBioSources().length > 0" class="ui-g">
@@ -124,9 +140,9 @@
 
                 </div>
 
-                <div class="ui-g-offset-2 ui-g-4">
+                <div class="ui-g-4">
                   <p-fieldset legend="Parameters">
-
+                    <h4>You can also list the terms in more or less strict way.</h4>
                     <h3>List data as: </h3>
                     <div class="ui-g" style="width:250px;margin-bottom:10px">
                       <div class="ui-g-12">
@@ -139,16 +155,14 @@
                       </div>
                     </div>
 
-
-                    You can also list the terms in more or less strict way.
                     <div class="ui-g">
                       <div class="ui-g-12">
                         <p-toolbar [style]="{'background-color':'transparent'}">
-                          <div class="ui-toolbar-group-left">
+                          <div class="ui-toolbar-group-left" style="margin-top: 2pt; margin-bottom: 2pt;">
                             <button pButton type="button" label="More strict" (click)="changeSearch($event, 'more')" icon="ui-icon-zoom-in"></button>
                           </div>
 
-                          <div class="ui-toolbar-group-right">
+                          <div class="ui-toolbar-group-right" style="margin-top: 2pt; margin-bottom: 2pt;">
                             <button pButton type="button" label="Less strict" (click)="changeSearch($event, 'less')" icon="ui-icon-zoom-out"></button>
                           </div>
                         </p-toolbar>
@@ -163,10 +177,11 @@
 
           </aw-wizard-step>
 
-          <aw-wizard-step stepTitle="Select Comparison Datasets" (stepEnter)="inWizard($event)">
+          <aw-wizard-step stepTitle="Select Comparisons" (stepEnter)="inWizard($event)">
             <navegation-menu></navegation-menu>
 
-            <p-fieldset legend="Select Comparisons">
+            <p-fieldset legend="Select Comparison Datasets">
+              <h2>Please select the datasets to compare to the query dataset.</h2>
               <data-selection-main (queryIdSelected)="addComparison($event)"></data-selection-main>
             </p-fieldset>
 
@@ -180,19 +195,28 @@
 
               <div class="ui-toolbar-group-right">
                 <button pButton type="button" class="ui-button-success" awNextStep (click)="startAnalysis($event)" label="Start Analysis"
-                  icon="fa fa-fw fa-check"></button>
+                  icon="fa fa-fw fa-check">
+                </button>
               </div>
             </p-toolbar>`
 
             <h2>Selected Data </h2>
-            <p>Genome: {{ getGenomeLabel() }}</p>
-            <p>Projects: {{ getProjectsLabel() }}</p>
-            <p>Query: {{ getQueryLabel() }}</p>
+            <p-fieldset legend="Genome">
+              <div class="ui-g-8">{{ getGenomeLabel() }}</div>
+            </p-fieldset>
+            <p-fieldset legend="Projects">
+              <div class="ui-g" *ngFor="let c of getProjectsLabel()">
+                <div class="ui-g-8">{{ c }}</div>
+              </div>
+            </p-fieldset>
+            <p-fieldset legend="Query">
+              <div style="word-wrap: break-word" class="ui-g-8">{{ getQueryLabel() }}</div>
+            </p-fieldset>
             <p-fieldset *ngIf="getSelectedBioSources().length > 0" legend="BioSources">
               <div class="ui-g" *ngFor="let c of getSelectedBioSources()">
                 <div class="ui-g-8">{{ c }}</div>
                 <div class="ui-g-offset-1 ui-g-1">
-                  <button pButton type="button" icon="fa fa-fw fa-close" (click)="removeBioSource(c[0])"></button>
+                  <button pButton type="button" icon="fa fa-fw fa-close" (click)="removeBioSource(c)"></button>
                 </div>
               </div>
             </p-fieldset>
