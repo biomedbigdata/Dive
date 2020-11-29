@@ -8,7 +8,7 @@ import { ErrorObservable } from "rxjs/observable/ErrorObservable";
 @Injectable()
 export class MiddlewareProxy {
 
-    private deepBlueUrl = 'http://localhost:56572';
+    private deepBlueUrl = 'http://127.0.0.11:56572';
 
   constructor(private http: HttpClient) {
     console.info('Starting Middleware Proxy');
