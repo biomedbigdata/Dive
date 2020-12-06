@@ -17,9 +17,9 @@ export class LoadQueriesScreen {
     route.queryParams.subscribe(params => {
       let query_id = params['qid'];
       let g_id = params['gid'];
-      let compare = params["cid"];
+      let compare  = params['cid'];
 
-      debugger;
+      // debugger;
       if (!query_id) {
         return;
       }
@@ -36,11 +36,15 @@ export class LoadQueriesScreen {
           this.router.navigate(['/similarfinder']);
         });
 
+        if (!Array.isArray(compare)) {
+          compare = [compare]
+        }
         for (let c of compare) {
           let setData = this.deepBlueService.getQueryInfo(new Id(c)).subscribe((op) => {
             this.selectedData.insertForComparison(op);
           });
         }
+
       });
     })
   }
