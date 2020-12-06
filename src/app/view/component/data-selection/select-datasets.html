@@ -1,34 +1,41 @@
-<!--TODO: Make the json nicely formatted-->
-<p-sidebar [(visible)]="visibleSidebar" position="right" [baseZIndex]="20000" styleClass="ui-sidebar-md">
-  <h1 style="font-weight:normal">{{selectedRow?.text()}}</h1>
-  <p-scrollPanel [style]="{height: '95%', width: '100%'}">
-    <button pButton type="button" icon="ui-icon-check-circle" label="Select Dataset" (click)="selectDatasets($event)"></button>
-    <button pButton type="button" (click)="visibleSidebar = false" label="Cancel" class="ui-button-secondary"></button>
+<p-sidebar [(visible)]="visibleSidebar" [baseZIndex]="20000" position="right" styleClass="ui-sidebar-md">
+    <h1 style="font-weight:normal">{{selectedRow?.text()}}</h1>
+    <p-scrollPanel [style]="{height: '95%', width: '100%'}">
+        <button (click)="selectDatasets($event)" icon="ui-icon-check-circle" label="Select Dataset" pButton
+                type="button"></button>
+        <button (click)="visibleSidebar = false" class="ui-button-secondary" label="Cancel" pButton
+                type="button"></button>
 
-    <div *ngIf="!selectedRow">
-      <h3>Loading dataset information...</h3>
-    </div>
-    <div *ngIf="selectedRow">
-      <h4>{{ selectedRow?.epigenetic_mark() }}</h4>
-      <h4>{{ selectedRow?.biosource() }}</h4>
-      <h4>{{ selectedRow?.sample_info() | json }}</h4>
-      <h4>{{ selectedRow?.technique() }}</h4>
-      <h4>{{ selectedRow?.project() }}</h4>
-      <h4>{{ selectedRow?.columns() | json }}</h4>
-      <query-flow [queryId]="clicked_query_id"></query-flow>
-    </div>
+        <div *ngIf="!selectedRow">
+            <h3>Loading dataset information...</h3>
+        </div>
+        <div *ngIf="selectedRow">
+            <h4>{{ selectedRow?.epigenetic_mark() }}</h4>
+            <h4>{{ selectedRow?.biosource() }}</h4>
+            <h4>
+                <pre id="json">{{ selectedRow?.sample_info() | json }}</pre>
+            </h4>
+            <h4>{{ selectedRow?.technique() }}</h4>
+            <h4>{{ selectedRow?.project() }}</h4>
+            <h4>
+                <pre id="json">{{ selectedRow?.columns() | json }}</pre>
+            </h4>
+            <query-flow [queryId]="clicked_query_id"></query-flow>
+        </div>
 
-  </p-scrollPanel>
+    </p-scrollPanel>
 </p-sidebar>
 
 <h4>Select Experiment</h4>
-<input type='text' style='padding:8px;margin:15px auto;width:30%;' placeholder='Type to filter datasets' [(ngModel)]="filterText" (keyup)='updateFilter($event)' />
+<input (keyup)='updateFilter($event)' [(ngModel)]="filterText" placeholder='Type to filter datasets'
+       style='padding:8px;margin:15px auto;width:30%;' type='text'/>
 <div class="content-section implementation">
-    <p-treeTable *ngIf="datasetTreeNodes.length" [value]="datasetTreeNodes" selectionMode="{{selectMode}}" [(selection)]="selectedDatasets" (onNodeSelect)="nodeSelect($event)">
-      <p-column field="name" header="Name"></p-column>
-      <p-column field="biosource" header="BioSource"></p-column>
-      <p-column field="epigeneticmark" header="Epigenetic Mark"></p-column>
-      <p-column field="project" header="Project"></p-column>
-  </p-treeTable>
+    <p-treeTable (onNodeSelect)="nodeSelect($event)" (onNodeUnselect)="nodeUnSelect($event)" *ngIf="datasetTreeNodes.length" [(selection)]="selectedDatasets"
+                 [value]="datasetTreeNodes" selectionMode="{{selectMode}}">
+        <p-column field="name" header="Name"></p-column>
+        <p-column field="biosource" header="BioSource"></p-column>
+        <p-column field="epigeneticmark" header="Epigenetic Mark"></p-column>
+        <p-column field="project" header="Project"></p-column>
+    </p-treeTable>
 
 </div>
