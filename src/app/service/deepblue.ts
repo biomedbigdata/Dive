@@ -1246,7 +1246,8 @@ export class DeepBlueService {
                         );
                     } else if (request_type === 'overlaps_enrichment_fast') {
                         pollSubject.next(
-                            (<Object[]>(data[1])).map((ee) => DeepBlueMiddlewareOverlapEnrichtmentResultItem.fromObject(ee))
+                            (<Object[]>(data[1])).filter((obj) => Object.keys(obj).length !== 0)
+                                .map((ee) => DeepBlueMiddlewareOverlapEnrichtmentResultItem.fromObject(ee))
                         );
                     } else if (request_type === 'overlaps_enrichment') {
                         pollSubject.next(
