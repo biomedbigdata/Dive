@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 
 import { ConfirmDialogModule, ConfirmationService } from 'primeng/primeng';
 import { MenuItem } from 'primeng/primeng';
-import { DeepBlueService } from "app/service/deepblue";
+import { DeepBlueService } from 'app/service/deepblue';
 import { IOperation } from 'app/domain/interfaces';
 import { SimilarityBarChartComponent } from 'app/view/component/charts/similarity';
 import { DeepBlueMiddlewareOverlapEnrichtmentResultItem } from 'app/domain/operations';
@@ -42,11 +42,11 @@ export class SimilarFinder implements OnDestroy {
     cutoffValue = 3;
 
     orderOptions = [
-        { label: 'Most similar', value: "desc" },
-        { label: 'Most dissimilar', value: "asc" }
+        { label: 'Most similar', value: 'desc' },
+        { label: 'Most dissimilar', value: 'asc' }
     ];
 
-    orderDirection = "desc";
+    orderDirection = 'desc';
 
     prevDatum: DeepBlueMiddlewareOverlapEnrichtmentResultItem[] = null;
 
@@ -85,8 +85,8 @@ export class SimilarFinder implements OnDestroy {
         }
 
         SimilarDatasets.sortDatasets(_self.deepBlueService, _self.cutoffValue, _self.orderDirection, datum).subscribe((sortedData) => {
-            _self.plot("Similar BioSources", sortedData['biosources'], _self.biosourcessimilaritybarchart, _self.biosourceElementClick)
-            _self.plot("Similar Epigenetic Marks", sortedData['epigenetic_marks'], _self.emssimilaritybarchart, _self.epigeneticMarkElementClick)
+            _self.plot('Similar BioSources', sortedData['biosources'], _self.biosourcessimilaritybarchart, _self.biosourceElementClick)
+            _self.plot('Similar Epigenetic Marks', sortedData['epigenetic_marks'], _self.emssimilaritybarchart, _self.epigeneticMarkElementClick)
         })
     }
 
@@ -101,7 +101,7 @@ export class SimilarFinder implements OnDestroy {
 
         const stack_values_result_boxplot: Array<Object> = [];
 
-        for (let data of datum) {
+        for (const data of datum) {
             stack_values_result_boxplot.push([
                 data[1]['low'],
                 data[1]['q1'],
@@ -113,7 +113,7 @@ export class SimilarFinder implements OnDestroy {
 
         series.push({
             type: 'boxplot',
-            name: "Similar",
+            name: 'Similar',
             data: stack_values_result_boxplot,
         });
 
@@ -124,19 +124,19 @@ export class SimilarFinder implements OnDestroy {
         const point = click.point;
         const category: string = point.category.trim();
 
-        let bs = _self.deepBlueService.getBioSourceByName(category);
+        const bs = _self.deepBlueService.getBioSourceByName(category);
         _self.deepBlueService.addSelectedBiosource(bs);
         _self.deepBlueService.getRelatedBioSources(bs).subscribe((bss) => {
             if (bss[1].length > 1) {
-                let s: any = bss[1];
+                const s: any = bss[1];
                 console.log(s)
-                let text = "<ul>" + s.map((ss: string) => "<li>" + ss + "</li>").join("") + "</ul>";
+                const text = '<ul>' + s.map((ss: string) => '<li>' + ss + '</li>').join('') + '</ul>';
                 console.log(text);
                 _self.confirmationService.confirm({
                     message: text,
                     accept: () => {
-                        for (let similar of bss[1]) {
-                            let bs = _self.deepBlueService.getBioSourceByName(similar);
+                        for (const similar of bss[1]) {
+                            const bs = _self.deepBlueService.getBioSourceByName(similar);
                             _self.deepBlueService.addSelectedBiosource(bs);
                         }
                     }
