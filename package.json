@@ -28,6 +28,7 @@
     "angular-archwizard": "^3.0.0",
     "angular2-highcharts": "^0.5.5",
     "chart.js": "^2.6.0",
+    "codelyzer": "^6.0.1",
     "core-js": "^2.4.1",
     "jquery": "^3.2.1",
     "karma-chrome-launcher": "^2.1.1",
