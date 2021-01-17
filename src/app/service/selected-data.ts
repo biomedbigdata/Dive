@@ -176,7 +176,10 @@ export class SelectedData implements OnDestroy {
     let compstacks = this._stacks.slice(1);
     if (compstacks.length > 0) {
       for (let stack of compstacks) {
-        compPart.push("cid="+stack.getCurrentOperation().id().id);
+        let currCompOp = stack.getCurrentOperation()
+        if (currCompOp !== null) {
+          compPart.push("cid="+currCompOp.id().id);
+        }
       }
       queryPart = queryPart + "&" + compPart.join("&");
     }
