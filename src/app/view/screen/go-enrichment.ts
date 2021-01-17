@@ -3,23 +3,20 @@ import { DeepBlueMiddlewareGOEnrichtmentResult, DeepBlueMiddlewareRequest } from
 import { Component, ViewChild, OnDestroy, AfterViewInit } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 
-import { MultiSelect, TabView } from 'primeng/primeng';
-
-import { Dropdown, SelectItem } from 'primeng/primeng';
-
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 
-import { BioSource, EpigeneticMark, FullExperiment, Genome, GeneModel } from 'app/domain/deepblue';
+import { GeneModel } from 'app/domain/deepblue';
 
 import { DeepBlueService } from 'app/service/deepblue';
 import { ProgressElement } from 'app/service/progresselement';
 
-import { DeepBlueOperation } from 'app/domain/operations';
-import { DeepBlueResult } from 'app/domain/operations';
 import { Utils } from 'app/service/utils';
 import { RequestManager } from 'app/service/requests-manager';
 import { SelectedData } from 'app/service/selected-data';
+import { SelectItem } from 'primeng/components/common/selectitem';
+import { Dropdown } from 'primeng/components/dropdown/dropdown';
+import { TabView } from 'primeng/components/tabview/tabview';
 
 @Component({
     templateUrl: './go-enrichment.html'
@@ -54,9 +51,9 @@ export class GoEnrichmentScreenComponent implements AfterViewInit, OnDestroy {
         { name: 'p_value', prop: 'pvalue', column_type: 'double' }
     ];
 
-    @ViewChild('geneModelDropdown') geneModelDropdown: Dropdown;
-    @ViewChild('overlapbarchart') overlapbarchart: OverlapsBarChartComponent;
-    @ViewChild('tabview') tabview: TabView;
+    @ViewChild('geneModelDropdown', { static: true }) geneModelDropdown: Dropdown;
+    @ViewChild('overlapbarchart', { static: true }) overlapbarchart: OverlapsBarChartComponent;
+    @ViewChild('tabview', { static: true }) tabview: TabView;
 
     selectedGeneModelSource = new BehaviorSubject<GeneModel>(null);
     selectedGeneModelValue$: Observable<GeneModel> = this.selectedGeneModelSource.asObservable();
@@ -75,7 +72,7 @@ export class GoEnrichmentScreenComponent implements AfterViewInit, OnDestroy {
                 this.geneModels = geneModels;
                 this.menuGeneModel = geneModels.map((geneModel: GeneModel) => {
                     const l = { label: geneModel.name, value: geneModel };
-                    this.geneModelDropdown.selectItem(null, l);
+                    this.geneModelDropdown.selectItem({}, l);
                     return l;
                 });
             },

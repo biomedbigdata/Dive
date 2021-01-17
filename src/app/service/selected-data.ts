@@ -161,12 +161,13 @@ export class SelectedData implements OnDestroy {
       return window.location.origin;
     }
 
-    // http://localhost:56570/#/load_query?qid=q33678&gid=g5&cid=q55029&cid=q61709&cid=q50975
-    let currOp = this._stacks[0].getCurrentOperation();
-    if (currOp === null) {
-      return window.location.origin;
+    let current = this._stacks[0].getCurrentOperation()
+    if (current === null) {
+      return "";
     }
-    let currentId = currOp.id().id;
+
+    let currentId = current.id().id;
+
     let queryPart = "/#/load_query?qid=" + currentId
 
     let gid = this.deepBlueService.getGenome().id.id;

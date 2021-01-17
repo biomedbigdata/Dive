@@ -1,9 +1,10 @@
-import { Component, ViewChild, OnInit, Input, OnDestroy, Output, EventEmitter } from '@angular/core';
+import { Component, ViewChild, Input, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { Annotation } from "app/domain/deepblue";
-import { SelectItem, Dropdown } from "primeng/primeng";
 import { Subscription } from "rxjs";
 import { DeepBlueService } from "app/service/deepblue";
 import { DeepBlueOperation } from 'app/domain/operations';
+import { SelectItem } from 'primeng/components/common/selectitem';
+import { Dropdown } from 'primeng/components/dropdown/dropdown';
 
 
 @Component({
@@ -25,7 +26,7 @@ export class SelectAnnotationsComponent implements OnDestroy {
 
     @Output() queryIdSelected = new EventEmitter();
 
-    @ViewChild('annotationsDropdown') annotationsDropdown: Dropdown;
+    @ViewChild('annotationsDropdown', { static: true }) annotationsDropdown: Dropdown;
 
     constructor(private deepBlueService: DeepBlueService) {
 
@@ -41,11 +42,11 @@ export class SelectAnnotationsComponent implements OnDestroy {
                 this.menuAnnotations = annotations.map((annotation: Annotation) => {
                     let l = { label: annotation.name, value: annotation };
                     if (l.label.toLowerCase().startsWith('cpg islands')) {
-                        this.annotationsDropdown.selectItem(null, l);
+                        this.annotationsDropdown.selectItem({}, l);
                     }
 
                     if (l.label.toLowerCase().startsWith('blueprint')) {
-                        this.annotationsDropdown.selectItem(null, l);
+                        this.annotationsDropdown.selectItem({}, l);
                     }
                     return l;
                 });
