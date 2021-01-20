@@ -1,4 +1,4 @@
-import { Component, ViewChild, Inject, forwardRef } from "@angular/core";
+import {Component, OnDestroy, AfterViewInit, ViewChild, Inject, forwardRef, Input, PipeTransform, Pipe} from '@angular/core';
 import { DeepBlueService } from "app/service/deepblue";
 import { IOperation, IRow } from "app/domain/interfaces";
 import { AppComponent } from "app/app.component";
@@ -7,7 +7,7 @@ import { RequestManager } from "../../service/requests-manager";
 import { Utils } from "app/service/utils";
 import { DefaultData } from "../../service/defaultdata";
 import { SelectedData } from "app/service/selected-data";
-import { WizardComponent } from "angular-archwizard";
+import { WizardComponent } from 'angular-archwizard';
 
 @Component({
   selector: 'overlap-enrichment-wizard',
@@ -48,7 +48,7 @@ export class OverlapEnrichmentWizard {
   }
 
   selectDatasets(event: Object[]) {
-    console.log(event);
+    // console.log(event);
     this.selected_datasets = event;
   }
 
@@ -65,7 +65,7 @@ export class OverlapEnrichmentWizard {
   }
 
   startEnrichment() {
-    const current: IOperation[] = this.selectedData.getStacksTopOperation();
+    const current: IOperation[] = this.getQuerys();
 
     this.deepBlueService.composedCalculateOverlapsEnrichment(current, this.background.id(), this.selected_datasets)
       .subscribe((request: DeepBlueMiddlewareRequest) => {
@@ -122,4 +122,23 @@ export class OverlapEnrichmentWizard {
     return "ui-g-10";
   }
 
+  getQuerys() {
+    let querys = this.selectedData.getStacksTopOperation();
+    return querys;
+  }
+
+  noDataSelected() {
+    return Object.keys(this.selected_datasets).length === 0;
+  }
+}
+
+@Pipe({name: 'keys'})
+export class KeysPipe implements PipeTransform {
+  transform(value: any, args: string[]): any {
+    let keys = [];
+    for (let key in value) {
+      keys.push({key: key, value: value[key]});
+    }
+    return keys;
+  }
 }

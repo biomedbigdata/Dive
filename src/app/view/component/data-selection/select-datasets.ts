@@ -256,4 +256,8 @@ export class SelectDatasetsComponent implements OnInit {
   ngOnDestroy() {
     this.projectsSubscription.unsubscribe();
   }
+
+  nodeUnSelect(event: any) {
+    this.buildDatasets()
+  }
 }

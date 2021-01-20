@@ -1699,7 +1699,7 @@ body {
     -ms-transform: rotate(180deg);
     transform: rotate(180deg); }
   .layout-container.menu-layout-static .layout-menu {
-    margin-left: -265px; }
+    margin-left: -300px; }
   .layout-container.menu-layout-static .layout-main {
     margin-left: 0px; }
   .layout-container.menu-layout-static.layout-menu-static-active .layout-menu {

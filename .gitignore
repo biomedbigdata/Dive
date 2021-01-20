@@ -49,3 +49,4 @@ src/assets/.sass-cache/
 
 
 dist/
+.idea/
