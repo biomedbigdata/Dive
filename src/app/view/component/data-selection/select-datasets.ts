@@ -236,7 +236,7 @@ export class SelectDatasetsComponent implements OnInit {
   }
 
   nodeSelect(event: any) {
-    debugger;
+    // debugger;
     if (event.node.data.leaf) {
       this.visibleSidebar = true;
       this.selectedRow = null;
