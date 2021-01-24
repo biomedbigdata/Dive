@@ -75,7 +75,7 @@ export class DataSelectionWizard implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.deepBlueService.genomeValue$.subscribe(genome => {
-      console.log("genone", genome);
+      // console.log("genome", genome);
       if (genome === null) {
         return;
       }

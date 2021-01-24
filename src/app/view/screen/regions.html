@@ -14,7 +14,8 @@
                     [limit]="10">
                 </ngx-datatable>
 
-                <p><a [hidden]="!request_id" href="{{ generateUCSCExportLine() }}" target="_blank">Export to genome browser</a></p>
+
+<!--            TODO: do we need this?    <p><a [hidden]="!request_id" href="{{ generateUCSCExportLine() }}" target="_blank">Export to genome browser</a></p>-->
                 <p><a [hidden]="!request_id" href="{{ generateDownloadLink() }}" target="_blank">Download regions</a></p>
         </div>
     </div>

@@ -1,0 +1,15 @@
+version: "3"
+services:
+
+  middleware:
+    image: quirinmanz/deepblue-middleware:latest
+    ports:
+      - "56572:56572"
+
+  dive:
+    image: quirinmanz/dive:latest
+    depends_on:
+      - middleware
+    ports:
+      - "56570:56570"
+

@@ -11,17 +11,15 @@
   </p-footer>
 </p-dialog>
 
+<h4>Use GENCODE names and Gene Ontology terms</h4>
+<p>A list of all available genes is available at the <a href="http://deepblue.mpi-inf.mpg.de/dashboard.php#ajax/deepblue_view_genes.php">DeepBlue Dashboard</a> </p>
 <div class="container">
+  <p></p>
   <div class="ui-g">
     <div class="ui-g-12">
       <div class="card">
-        <h1>Genes and GO Terms</h1>
-        <h2>Use GENCODE names and Gene Ontology terms</h2>
-        <h3>A list of all available genes is available at the
-          <a href="http://deepblue.mpi-inf.mpg.de/dashboard.php#ajax/deepblue_view_genes.php">DeepBlue Dashboard</a>
-        </h3>
         <p>
-          <label (click)="textAreaContent = demo">Click HERE to use example</label>
+          <label style="color: #03A9F4;" (click)="textAreaContent = demo">Click here to use example</label>
         </p>
         <button type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-left" [disabled]="textAreaContent.trim().length == 0"
           (click)="onUploadClick()">

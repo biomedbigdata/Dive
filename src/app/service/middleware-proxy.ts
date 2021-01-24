@@ -17,7 +17,7 @@ export class MiddlewareProxy {
   get<T>(command: string, params?: HttpParams): Observable<T> {
     if (params) {
       return this.http.get<T>(this.deepBlueUrl + '/' + command, { params: params }).pipe(
-        retry(),
+        retry()
       );
     }
     return this.http.get<T>(this.deepBlueUrl + '/' + command).pipe(
