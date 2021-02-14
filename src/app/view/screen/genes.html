@@ -29,7 +29,7 @@
       <div class="ui-g" *ngFor="let c of filters">
         <div style="word-wrap: break-word" class="ui-g-8">{{ toString(c) }}</div>
         <div class="ui-g-offset-1 ui-g-1">
-          <button pButton type="button" icon="fa fa-fw fa-close" (click)="removeFilter(c)"></button>
+          <button pButton type="button" icon="pi pi-times" (click)="removeFilter(c)"></button>
         </div>
       </div>
     </div>

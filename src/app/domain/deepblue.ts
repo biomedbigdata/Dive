@@ -55,7 +55,7 @@ export class IdName extends Name {
     }
 
     text(): string {
-        return this.name + "(" + this.id + ")";
+        return this.name + " (" + this.id.text() + ")";
     }
 
     equals(other: IdName): boolean {

@@ -30074,6 +30074,7 @@ body .ui-treetable .ui-treetable-tbody > tr {
   background: #ffffff;
   border: 1px solid #bdbdbd; }
   body .ui-treetable .ui-treetable-tbody > tr > td {
+    overflow-wrap: break-word;
     padding: 0.714em 0.857em;
     border: 0 none; }
     body .ui-treetable .ui-treetable-tbody > tr > td .ui-treetable-toggler {

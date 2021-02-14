@@ -64,7 +64,7 @@ export class AppMenuComponent {
                     <div class="ui-g">
                         <div class="ui-g-4"><label>{{ child.label }}</label></div>
                         <div class="ui-g-offset-1 ui-g-4"><input style="width:80px" type="{{ child.type }}" [formControlName]="child.control_name" pInputText/></div>
-                        <div class="ui-g-offset-1 ui-g-1"><p-button (onClick)="child.submit()" icon="fa fa-fw fa-check"></p-button></div>
+                        <div class="ui-g-offset-1 ui-g-1"><p-button (onClick)="child.submit()" icon="pi pi-check"></p-button></div>
                     </div>
                 </form>
 
@@ -72,7 +72,7 @@ export class AppMenuComponent {
                     <div class="ui-g">
                         <div class="ui-g-4"><label>{{ child.label }}</label></div>
                         <div class="ui-g-offset-1 ui-g-4"><input style="width:80px" type="{{ child.type }}" [formControlName]="child.control_name" pInputText/></div>
-                        <div class="ui-g-offset-1 ui-g-1"><p-button (onClick)="child.submit()" icon="fa fa-fw fa-check"></p-button></div>
+                        <div class="ui-g-offset-1 ui-g-1"><p-button (onClick)="child.submit()" icon="pi pi-check"></p-button></div>
                     </div>
                 </form>
 
@@ -81,7 +81,7 @@ export class AppMenuComponent {
                         <div class="ui-g-4"><label>{{child.label}}</label></div>
                         <div class="ui-g-offset-1 ui-g-2"><p-dropdown   [autoWidth]="false" [style]="{'width':'100%'}" [options]="child.options" [formControlName]="child.operation_control_name"></p-dropdown></div>
                         <div class="ui-g-offset-1 ui-g-1"><input style="width:40px" type="{{ child.type }}" [formControlName]="child.value_control_name" pInputText/></div>
-                        <div class="ui-g-offset-1 ui-g-1"><p-button (onClick)="child.submit()" icon="fa fa-fw fa-check"></p-button></div>
+                        <div class="ui-g-offset-1 ui-g-1"><p-button (onClick)="child.submit()" icon="pi pi-check"></p-button></div>
                     </div>
                 </form>
 
