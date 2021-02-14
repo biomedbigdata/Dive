@@ -127,8 +127,8 @@ export class OverlapEnrichmentWizard {
     return querys;
   }
 
-  noDataSelected() {
-    return Object.keys(this.selected_datasets).length === 0;
+  getSelectedDatasets() {
+    return Object.keys(this.selected_datasets);
   }
 }
 

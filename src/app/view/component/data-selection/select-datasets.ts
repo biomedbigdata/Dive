@@ -58,14 +58,15 @@ export class SelectDatasetsComponent implements OnInit {
 
   buildItems() {
     let projectNames = this.projects.map((project) => project.name);
-    this.datasetTreeNodes = this.datasets.map((dataset: Dataset) => {
+    this.datasetTreeNodes = <TreeNode[]>this.datasets.map((dataset: Dataset) => this.buildNode(dataset, projectNames)).filter((node) => node.children.length > 0);
+        /*this.datasets.map((dataset: Dataset) => {
         let n = this.buildNode(dataset, projectNames)
-        console.log(n)
+        // console.log(n)
         return n;
       }).filter((node) => {
         return node.children.length > 0
         }
-      );
+      );*/
   }
 
   updateFilter($event: any) {

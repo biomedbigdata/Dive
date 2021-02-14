@@ -17,13 +17,13 @@
                   <div class="ui-g-10" style="word-wrap: break-word">{{ selected_datasets }}</div>
                 </p-fieldset>-->
                 <p-fieldset legend="Datasets"> <!--*ngIf="selected_datasets.length > 0"-->
-                    <div *ngFor="let entry of selected_datasets | keys" class="ui-g">
-                        <div class="ui-g" style="word-wrap: break-word">{{ entry.key }}</div>
-                        <div *ngFor="let ds of entry.value" class="ui-g-offset-1 ui-g-11">
+                    <div *ngFor="let ds of getSelectedDatasets()" class="ui-g">
+                        <div class="ui-g" style="word-wrap: break-word">{{ ds }}</div>
+                        <!--<div *ngFor="let ds of entry.value" class="ui-g-offset-1 ui-g-11">
                             <div style="word-wrap: break-word"> {{ ds }}</div>
-                        </div>
+                        </div>-->
                         <!--<div class="ui-g-offset-1 ui-g-1">
-                          <button pButton type="button" icon="fa fa-fw fa-close" (click)="removeComparison(c)"></button>
+                          <button pButton type="button" icon="pi pi-times" (click)="removeComparison(c)"></button>
                         </div>-->
                     </div>
                 </p-fieldset>
@@ -70,7 +70,7 @@
                                         type="button"></button>
                             </div>
                             <div class="ui-toolbar-group-right">
-                                <button [disabled]="noDataSelected()" awNextStep
+                                <button [disabled]="getSelectedDatasets().length === 0" awNextStep
                                         icon="ui-icon-arrow-forward" label="Start Analysis"
                                         pButton
                                         type="button"></button>
@@ -83,7 +83,7 @@
                                 Remember that the execution time grows with more datasets.</h4>
                             <p-tabView>
                                 <p-tabPanel header="Experiments">
-                                    <select-datasets-component (datasetsSelected)="selectDatasets($event)"></select-datasets-component>
+                                    <select-datasets-component [selectMode]="'multiple'" (datasetsSelected)="selectDatasets($event)"></select-datasets-component>
                                 </p-tabPanel>
                             </p-tabView>
 
