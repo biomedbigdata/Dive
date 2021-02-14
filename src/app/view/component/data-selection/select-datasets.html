@@ -1,10 +1,12 @@
 <p-sidebar [(visible)]="visibleSidebar" [baseZIndex]="20000" position="right" styleClass="ui-sidebar-md">
     <h1 style="font-weight:normal; overflow-wrap: break-word;">{{selectedRow?.text()}}</h1>
     <p-scrollPanel [style]="{height: '95%', width: '100%'}">
-        <button (click)="selectDatasets($event)" icon="ui-icon-check-circle" label="Select Dataset" pButton
-                type="button"></button>
-        <button (click)="visibleSidebar = false" class="ui-button-secondary" label="Cancel" pButton
-                type="button"></button>
+        <div *ngIf="selectMode === 'single'">
+            <button (click)="selectDatasets($event)" icon="ui-icon-check-circle" label="Select Dataset" pButton
+                    type="button"></button>
+            <button (click)="visibleSidebar = false" class="ui-button-secondary" label="Cancel" pButton
+                    type="button"></button>
+        </div>
 
         <div *ngIf="!selectedRow">
             <h3>Loading dataset information...</h3>
@@ -31,6 +33,7 @@
        style='padding:8px;margin:15px auto;width:30%;' type='text'/>
 <div class="content-section implementation">
     <p-treeTable (onNodeSelect)="nodeSelect($event)"
+                 (onNodeUnselect)="nodeUnSelect($event)"
                  [(selection)]="selectedDatasets"
                  [value]="datasetTreeNodes"
                  selectionMode="{{selectMode}}">

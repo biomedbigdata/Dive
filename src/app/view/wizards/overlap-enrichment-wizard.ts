@@ -1,4 +1,4 @@
-import {Component, OnDestroy, AfterViewInit, ViewChild, Inject, forwardRef, Input, PipeTransform, Pipe} from '@angular/core';
+import {Component, OnDestroy, AfterViewInit, ViewChild, Inject, forwardRef} from '@angular/core';
 import { DeepBlueService } from "app/service/deepblue";
 import { IOperation, IRow } from "app/domain/interfaces";
 import { AppComponent } from "app/app.component";
@@ -128,17 +128,18 @@ export class OverlapEnrichmentWizard {
   }
 
   getSelectedDatasets() {
-    return Object.keys(this.selected_datasets);
-  }
-}
-
-@Pipe({name: 'keys'})
-export class KeysPipe implements PipeTransform {
-  transform(value: any, args: string[]): any {
     let keys = [];
-    for (let key in value) {
-      keys.push({key: key, value: value[key]});
+    for (let key in this.selected_datasets) {
+      keys.push({key: key, value: this.selected_datasets[key]});
     }
     return keys;
   }
+
+/*  removeSelectedDataset(key : string) {
+    debugger;
+    let pos = this.selected_datasets[key];
+    let x = 1;
+  }*/
+
 }
+

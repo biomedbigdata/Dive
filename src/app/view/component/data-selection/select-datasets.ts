@@ -29,7 +29,7 @@ export class SelectDatasetsComponent implements OnInit {
 
   clicked_query_id: string;
 
-  @Input() selectMode = "checkbox"
+  @Input() selectMode = "checkbox";
   @Output() queryIdSelected = new EventEmitter();
   @Output() datasetsSelected = new EventEmitter();
 
@@ -205,33 +205,36 @@ export class SelectDatasetsComponent implements OnInit {
           .subscribe((q) => this.queryIdSelected.emit(q));
       }
     }
+    // this.buildDatasets();
 
-    this.buildDatasets();
   }
 
   buildDatasets() {
-    let actual = null;
+    // let actual = null;
     let datasets: any = {}
     for (let selected of this.selectedDatasets) {
-      if (selected.data.name == "Chomatin States Segmentation") {
-        continue;
-      }
+      // if (selected.data.name == "Chomatin States Segmentation") {
+      //   continue;
+      // }
       if (selected.data.leaf) {
+        if (!(selected.data.parent in datasets)) {
+          datasets[selected.data.parent] = [];
+        }
         if (selected.data._query_id) {
-          actual.data.push([selected.data._query_id.query_id.id, selected.data.name]);
+          datasets[selected.data.parent].push([selected.data._query_id.query_id.id, selected.data.name]);
         } else {
-          actual.data.push(selected.data.name);
+          datasets[selected.data.parent].push(selected.data.name);
         }
-      } else {
-        if (actual) {
-          datasets[actual.name] = actual.data;
-        }
-        actual = { name: selected.data.name, data: [] }
-      }
+      } // else {
+      //   if (actual) {
+      //     datasets[actual.name] = actual.data;
+      //   }
+      //   actual = { name: selected.data.name, data: [] }
+      // }
     }
-    if (actual) {
-      datasets[actual.name] = actual.data;
-    }
+    // if (actual) {
+    //   datasets[actual.name] = actual.data;
+    // }
 
     this.datasetsSelected.emit(datasets);
   }
