@@ -58,7 +58,7 @@ import { RouterGuard } from 'app/service/router-guard';
 import { ComparisonSelectionScreen } from 'app/view/screen/comparison-selection';
 
 import { DataSelectionWizard, NavegationMenu } from 'app/view/wizards/data-selection-wizard';
-import {KeysPipe, OverlapEnrichmentWizard} from 'app/view/wizards/overlap-enrichment-wizard';
+import {OverlapEnrichmentWizard} from 'app/view/wizards/overlap-enrichment-wizard';
 
 //import { Angulartics2Module } from 'angulartics2';
 //import { Angulartics2GoogleAnalytics } from 'angulartics2/ga';
@@ -251,8 +251,7 @@ import { AutoCompleteModule } from 'primeng/components/autocomplete/autocomplete
         SelectQuery,
         NavegationMenu,
         DataSelectionWizard,
-        OverlapEnrichmentWizard,
-        KeysPipe
+        OverlapEnrichmentWizard
     ],
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },

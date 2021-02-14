@@ -8,7 +8,7 @@ import { ErrorObservable } from "rxjs/observable/ErrorObservable";
 @Injectable()
 export class MiddlewareProxy {
 
-    private deepBlueUrl = 'http://127.0.0.11:56572';
+  private deepBlueUrl = 'api';
 
   constructor(private http: HttpClient) {
     console.info('Starting Middleware Proxy');
@@ -17,8 +17,7 @@ export class MiddlewareProxy {
   get<T>(command: string, params?: HttpParams): Observable<T> {
     if (params) {
       return this.http.get<T>(this.deepBlueUrl + '/' + command, { params: params }).pipe(
-        // catchError(this.handleError) // then handle the error
-        retry(),
+        retry()
       );
     }
     return this.http.get<T>(this.deepBlueUrl + '/' + command).pipe(

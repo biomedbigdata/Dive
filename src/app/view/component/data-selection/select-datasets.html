@@ -1,10 +1,12 @@
 <p-sidebar [(visible)]="visibleSidebar" [baseZIndex]="20000" position="right" styleClass="ui-sidebar-md">
-    <h1 style="font-weight:normal">{{selectedRow?.text()}}</h1>
+    <h1 style="font-weight:normal; overflow-wrap: break-word;">{{selectedRow?.text()}}</h1>
     <p-scrollPanel [style]="{height: '95%', width: '100%'}">
-        <button (click)="selectDatasets($event)" icon="ui-icon-check-circle" label="Select Dataset" pButton
-                type="button"></button>
-        <button (click)="visibleSidebar = false" class="ui-button-secondary" label="Cancel" pButton
-                type="button"></button>
+        <div *ngIf="selectMode === 'single'">
+            <button (click)="selectDatasets($event)" icon="ui-icon-check-circle" label="Select Dataset" pButton
+                    type="button"></button>
+            <button (click)="visibleSidebar = false" class="ui-button-secondary" label="Cancel" pButton
+                    type="button"></button>
+        </div>
 
         <div *ngIf="!selectedRow">
             <h3>Loading dataset information...</h3>
@@ -30,41 +32,32 @@
 <input (keyup)='updateFilter($event)' [(ngModel)]="filterText" placeholder='Type to filter datasets'
        style='padding:8px;margin:15px auto;width:30%;' type='text'/>
 <div class="content-section implementation">
-<!--old HEAD-->
-<!--    <p-treeTable (onNodeSelect)="nodeSelect($event)" (onNodeUnselect)="nodeUnSelect($event)" *ngIf="datasetTreeNodes.length" [(selection)]="selectedDatasets"
-                 [value]="datasetTreeNodes" selectionMode="{{selectMode}}">
-        <p-column field="name" header="Name"></p-column>
-        <p-column field="biosource" header="BioSource"></p-column>
-        <p-column field="epigeneticmark" header="Epigenetic Mark"></p-column>
-        <p-column field="project" header="Project"></p-column>
-    </p-treeTable>-->
+    <p-treeTable (onNodeSelect)="nodeSelect($event)"
+                 (onNodeUnselect)="nodeUnSelect($event)"
+                 [(selection)]="selectedDatasets"
+                 [value]="datasetTreeNodes"
+                 selectionMode="{{selectMode}}">
 
-  <p-treeTable [value]="datasetTreeNodes" 
-    selectionMode="single" 
-    [(selection)]="selectedDatasets" 
-    (onNodeSelect)="nodeSelect($event)"> 
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Name</th>
+                <th>BioSource</th>
+                <th>Epigenetic Mark</th>
+                <th>Project</th>
+            </tr>
+        </ng-template>
 
-      <ng-template pTemplate="header">
-          <tr>
-              <th>Name</th>
-              <th>BioSource</th>
-              <th>Epigenetic Mark</th>
-              <th>Project</th>
-          </tr>
-      </ng-template>
-
-      <ng-template pTemplate="body" let-rowNode let-rowData="rowData">
-          <tr [ttRow]="rowNode" [ttSelectableRow]="rowNode">
-              <td>
-                <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
-                  {{rowData.name}}
-              </td>
-              <td>{{rowData.biosource}}</td>
-              <td>{{rowData.epigeneticmark}}</td>
-              <td>{{rowData.project}}</td>
-          </tr>
-      </ng-template>
-
-  </p-treeTable>
+        <ng-template let-rowData="rowData" let-rowNode pTemplate="body">
+            <tr [ttRow]="rowNode" [ttSelectableRow]="rowNode">
+                <td>
+                    <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
+                    {{rowData.name}}
+                </td>
+                <td>{{rowData.biosource}}</td>
+                <td>{{rowData.epigeneticmark}}</td>
+                <td>{{rowData.project}}</td>
+            </tr>
+        </ng-template>
+    </p-treeTable>
 
 </div>

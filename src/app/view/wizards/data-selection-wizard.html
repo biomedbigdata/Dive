@@ -20,7 +20,7 @@
           <div class="ui-g" *ngFor="let c of getSelectedBioSources()">
             <div class="ui-g-8">{{ c }}</div>
             <div class="ui-g-offset-1 ui-g-1">
-              <button pButton type="button" icon="fa fa-fw fa-close" (click)="removeBioSource(c)"></button>
+              <button pButton type="button" icon="pi pi-times" (click)="removeBioSource(c)"></button>
             </div>
           </div>
         </p-fieldset>
@@ -29,7 +29,7 @@
           <div class="ui-g" *ngFor="let c of selectedComparison">
             <div style="word-wrap: break-word" class="ui-g-8"> {{ c.text() }}</div>
             <div class="ui-g-offset-1 ui-g-1">
-              <button pButton type="button" icon="fa fa-fw fa-close" (click)="removeComparison(c)"></button>
+              <button pButton type="button" icon="pi pi-times" (click)="removeComparison(c)"></button>
             </div>
           </div>
         </p-fieldset>
@@ -128,13 +128,13 @@
                       <b>Include all</b>
                     </div>
                     <div class="ui-g-offset-1 ui-g-3">
-                      <button pButton type="button" icon="fa fa-fw fa-check" label="Include all" (click)="addAllBioSources()"></button>
+                      <button pButton type="button" icon="pi pi-check" label="Include all" (click)="addAllBioSources()"></button>
                     </div>
                   </div>
                   <div class="ui-g" *ngFor="let c of getSimilarBioSources()">
                     <div class="ui-g-8 ">{{c}}</div>
                     <div class="ui-g-offset-1 ui-g-3">
-                      <button pButton type="button" icon="fa fa-fw fa-check" label="Select" (click)="addBioSource(c)"></button>
+                      <button pButton type="button" icon="pi pi-check" label="Select" (click)="addBioSource(c)"></button>
                     </div>
                   </div>
 
@@ -195,7 +195,7 @@
 
               <div class="ui-toolbar-group-right">
                 <button pButton type="button" class="ui-button-success" awNextStep (click)="startAnalysis($event)" label="Start Analysis"
-                  icon="fa fa-fw fa-check">
+                  icon="pi pi-check">
                 </button>
               </div>
             </p-toolbar>`
@@ -216,7 +216,7 @@
               <div class="ui-g" *ngFor="let c of getSelectedBioSources()">
                 <div class="ui-g-8">{{ c }}</div>
                 <div class="ui-g-offset-1 ui-g-1">
-                  <button pButton type="button" icon="fa fa-fw fa-close" (click)="removeBioSource(c)"></button>
+                  <button pButton type="button" icon="pi pi-times" (click)="removeBioSource(c)"></button>
                 </div>
               </div>
             </p-fieldset>
@@ -226,7 +226,7 @@
               <div class="ui-g" *ngFor="let c of selectedComparison">
                 <div style="word-wrap: break-word" class="ui-g-8">{{ c.text() }}</div>
                 <div class="ui-g-offset-1 ui-g-1">
-                  <button pButton type="button" icon="fa fa-fw fa-close" (click)="removeComparison(c)"></button>
+                  <button pButton type="button" icon="pi pi-times" (click)="removeComparison(c)"></button>
                 </div>
               </div>
             </p-fieldset>

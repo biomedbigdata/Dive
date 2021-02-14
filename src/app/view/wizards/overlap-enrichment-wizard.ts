@@ -1,6 +1,4 @@
-
-import { Component, ViewChild, Inject, forwardRef , PipeTransform, Pipe} from '@angular/core';
-
+import {Component, OnDestroy, AfterViewInit, ViewChild, Inject, forwardRef} from '@angular/core';
 import { DeepBlueService } from "app/service/deepblue";
 import { IOperation, IRow } from "app/domain/interfaces";
 import { AppComponent } from "app/app.component";
@@ -9,7 +7,7 @@ import { RequestManager } from "../../service/requests-manager";
 import { Utils } from "app/service/utils";
 import { DefaultData } from "../../service/defaultdata";
 import { SelectedData } from "app/service/selected-data";
-import { WizardComponent } from "angular-archwizard";
+import { WizardComponent } from 'angular-archwizard';
 
 @Component({
   selector: 'overlap-enrichment-wizard',
@@ -129,18 +127,19 @@ export class OverlapEnrichmentWizard {
     return querys;
   }
 
-  noDataSelected() {
-    return Object.keys(this.selected_datasets).length === 0;
-  }
-}
-
-@Pipe({name: 'keys'})
-export class KeysPipe implements PipeTransform {
-  transform(value: any, args: string[]): any {
+  getSelectedDatasets() {
     let keys = [];
-    for (let key in value) {
-      keys.push({key: key, value: value[key]});
+    for (let key in this.selected_datasets) {
+      keys.push({key: key, value: this.selected_datasets[key]});
     }
     return keys;
   }
+
+/*  removeSelectedDataset(key : string) {
+    debugger;
+    let pos = this.selected_datasets[key];
+    let x = 1;
+  }*/
+
 }
+

@@ -28,7 +28,7 @@
     <div class="ui-g-12">
       <div class="card">
         <!-- We send the genome name as the file name -->
-        <p-fileUpload name="{{deepBlueService.getGenome()?.name}}" url="http://10.162.163.34:56572/composed_commands/upload_regions" (onBeforeUpload)="isUploading = true" (onUpload)="onUpload($event)"
+        <p-fileUpload name="{{deepBlueService.getGenome()?.name}}" (onBeforeUpload)="isUploading = true" (onUpload)="onUpload($event)"
           accept="text/plain,.csv,.bed,.txt" maxFileSize="10000000" auto="true">
 
           <ng-template pTemplate="content">
