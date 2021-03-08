@@ -14,6 +14,6 @@ export class DataSelectionScreen {
 
     selectQuery(event: IOperation) {
         this.deepBlueService.setDataToDive(event);
-        this.router.navigate(['/similarfinder']);
+        this.router.navigate(['/go_enrichment']);
     }
 }

@@ -1,26 +1,31 @@
-import { Injectable, Component } from '@angular/core';
+import {Injectable} from '@angular/core';
 
-import { Observable } from 'rxjs/Observable'
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { DeepBlueService } from 'app/service/deepblue';
-import { EpigeneticMark } from 'app/domain/deepblue';
+import {Observable} from 'rxjs/Observable'
+import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import {DeepBlueService} from 'app/service/deepblue';
+import {EpigeneticMark} from 'app/domain/deepblue';
 
 
 const BASIC_MENU: any[] = [
   { label: 'Data Wizard', icon: 'view_carousel', routerLink: ['/'] },
-  { label: 'Select Query', icon: 'format_list_bulleted', routerLink: ['/dataselection'] }
+  { label: 'Data Advanced', icon: 'format_list_bulleted', items: [
+      { label: 'Select Query', icon: 'format_list_bulleted', routerLink: ['/dataselection'] },
+      { label: 'Similar Data', icon: 'compare_arrows', routerLink: ['/similarfinder'] },
+      { label: 'Comparison Selection', icon: 'compare', routerLink: ['comparisonselection'] },
+      { label: 'Get regions', icon: 'dehaze', routerLink: ['/regions'] }
+    ] },
+  { label: 'Filter & Transform', icon: 'transform', items: [
+      { label: 'Transform Regions', icon: 'transform', routerLink: ['/transform'] },
+      { name: 'filtering', label: 'Filtering', icon: 'pause', items: [] },
+      { name: 'columns', label: 'Columns Filtering', icon: 'view_week', items: [] }
+    ] },
+  { name: 'quick_overlaps', label: 'Quick Overlaps', icon: 'vertical_align_center', items: [
+      { name: 'genes', label: 'Genes', icon: 'room', routerLink: ['/genes'] }] },
+  { name: 'go_enrichment', label: 'Gene Ontology', icon: 'dashboard_customize', routerLink: ['/go_enrichment'] },
+  { name: 'overlap_enrichment', label: 'Overlap Enrichment', icon: 'view_quilt', routerLink: ['/overlap_enrichment'] }
 ];
 
 const EXTRA_MENU_ITEMS: any[] = [
-  { label: 'Transform Regions', icon: 'transform', routerLink: ['/transform'] },
-  { label: 'Similar Data', icon: 'compare_arrows', routerLink: ['/similarfinder'] },
-  { label: 'Comparison Selection', icon: 'compare', routerLink: ['comparisonselection'] },
-  { label: 'Get regions', icon: 'dehaze', routerLink: ['/regions'] },
-  { name: 'filtering', label: 'Filtering', icon: 'pause', items: [] },
-  { name: 'columns', label: 'Columns Filtering', icon: 'view_week', items: [] },
-  { name: 'genes', label: 'Genes', icon: 'room', routerLink: ['/genes'] },
-  { name: 'go_enrichment', label: 'Gene Ontology', icon: 'view_quilt', routerLink: ['/go_enrichment'] },
-  { name: 'overlap_enrichment', label: 'Overlap Enrichment', icon: 'view_quilt', routerLink: ['/overlap_enrichment'] }
 ]
 
 export interface IMenu {
@@ -60,7 +65,17 @@ export class DiveMenuService {
   }
 
   findMenu(parentName: string): any {
-    return this.model.find(m => m.name == parentName);
+    for (let m of this.model) {
+      if (m.name == parentName) {
+        return m
+      } else if ('items' in m) {
+         let subM = m.items.find(i => i.name == parentName);
+         if (subM) {
+           return subM;
+         }
+    }
+    }
+    return undefined;
   }
 
   findMenuPos(parentName: string): number {
@@ -172,7 +187,17 @@ export class EpigeneticMarkMenu implements IMenu {
           }
 
           this.deepBlueService.getComposedEpigeneticMarksFromCategory(category).subscribe(ems => {
-            this.diveMenu.reset(category);
+            const subMenu = this.diveMenu.findMenu(category);
+            if (!subMenu) {
+              this.diveMenu.includeObject('quick_overlaps', {
+                name: category,
+                label: category,
+                icon: 'change_history',
+                items: new Array<Object>()
+              });
+            } else {
+              subMenu['items'] = [];
+            }
 
             for (let em of ems) {
               this.diveMenu.includeItem(category, em.name, 'fiber_manual_record',
@@ -207,7 +232,7 @@ export class CSSExperimentsMenu implements IMenu {
       this.deepBlueService.getChromatinStateSegments().subscribe((csss: string[][]) => {
         if (csss.length > 0) {
           this.diveMenu.remove('css');
-          this.diveMenu.add('css', 'Chromatin State Segmentation', 'change_history');
+          this.diveMenu.includeObject('quick_overlaps', {name: 'css', label: 'Chromatin State Segmentation', icon: 'change_history', items: new Array<Object>()});
           csss.sort((a, b) => a[1].localeCompare(b[1  ]));
           for (let css of csss) {
             this.diveMenu.includeItem('css', css[1], 'fiber_manual_record',

@@ -137,7 +137,7 @@ export class DataSelectionWizard implements AfterViewInit {
     for (let c of this.selectedComparison) {
       this.selectedData.insertForComparison(c);
     }
-    this.router.navigate(['/similarfinder']);
+    this.router.navigate(['/go_enrichment']);
   }
 
   updateProjects() {

@@ -31,7 +31,7 @@ export class LoadQueriesScreen {
 
         let setData = this.deepBlueService.getQueryInfo(new Id(query_id)).subscribe((op) => {
           this.deepBlueService.setDataToDive(op);
-          this.router.navigate(['/similarfinder']);
+          this.router.navigate(['/go_enrichment']);
         });
 
         if (!Array.isArray(compare)) {

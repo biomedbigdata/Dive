@@ -1,17 +1,13 @@
-import { Component } from '@angular/core';
-import { Input } from '@angular/core';
+import {Component, forwardRef, Inject, Input} from '@angular/core';
 
-import {trigger, state, style, transition, animate} from '@angular/animations';
+import {animate, state, style, transition, trigger} from '@angular/animations';
 
-import { Inject } from '@angular/core';
-import { forwardRef } from '@angular/core';
+import {Location} from '@angular/common';
+import {Router} from '@angular/router';
 
-import { Location } from '@angular/common';
-import { Router } from '@angular/router';
-
-import { AppComponent } from 'app/app.component';
-import { DiveMenuService } from 'app/service/menu';
-import { MenuItem } from 'primeng/components/common/menuitem';
+import {AppComponent} from 'app/app.component';
+import {DiveMenuService} from 'app/service/menu';
+import {MenuItem} from 'primeng/components/common/menuitem';
 
 @Component({
     selector: 'app-menu',
@@ -149,8 +145,20 @@ export class AppSubMenu {
     }
 
     isActive(index: number): boolean {
+        /*if (this.activeIndex === undefined && this.router.url !== '/') {
+            if ('items' in this.item) {
+                if (this.root || this.item.items.some(i => 'routerLink' in i && i.routerLink[0] === this.router.url)) {
+                    this.visible = true;
+                    return true;
+                }
+            }
+        }*/
         return this.activeIndex === index;
     }
+
+/*    setActive(index: number): void {
+        this.activeIndex = index;
+    }*/
 
     @Input() get reset(): boolean {
         return this._reset;
