@@ -133,6 +133,7 @@ import { SplitButtonModule } from 'primeng/components/splitbutton/splitbutton';
 import { ConfirmationService } from 'primeng/components/common/confirmationservice';
 import { TreeTableModule } from 'primeng/components/treetable/treetable';
 import { AutoCompleteModule } from 'primeng/components/autocomplete/autocomplete';
+import {CsvModule} from '@ctrl/ngx-csv';
 
 @NgModule({
     imports: [
@@ -206,6 +207,7 @@ import { AutoCompleteModule } from 'primeng/components/autocomplete/autocomplete
         OrganizationChartModule,
         CardModule,
         ColorPickerModule,
+        CsvModule,
         //Angulartics2Module.forRoot([Angulartics2GoogleAnalytics])
     ],
     declarations: [

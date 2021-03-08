@@ -8,6 +8,7 @@ import { Utils } from "app/service/utils";
 import { DefaultData } from "../../service/defaultdata";
 import { SelectedData } from "app/service/selected-data";
 import { WizardComponent } from 'angular-archwizard';
+import { CsvModule } from '@ctrl/ngx-csv';
 
 @Component({
   selector: 'overlap-enrichment-wizard',
@@ -88,7 +89,7 @@ export class OverlapEnrichmentWizard {
         const row: IRow = {};
         for (let idx = 0; idx < this.columns.length; idx++) {
           const column_name = this.columns[idx].name;
-          const v = x.data[column_name];
+          const v = x[column_name];
           row[column_name.toLowerCase().replace(/_/g, '')] = Utils.convert(v, this.columns[idx]['column_type'])
         }
         return row;

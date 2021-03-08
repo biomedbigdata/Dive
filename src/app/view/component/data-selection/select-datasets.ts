@@ -163,7 +163,7 @@ export class SelectDatasetsComponent implements OnInit {
   selectDatasets(event: any) {
     this.visibleSidebar = false;
 
-    if (Array.isArray(this.selectedDatasets)) {
+    if (Array.isArray(this.selectedDatasets) && this.selectedDatasets.length > 1) {
       /*
       -- We do not allow multiple experiments data selection.
       -- It has the risk of the user select many experiments and too many regions.
@@ -212,10 +212,11 @@ export class SelectDatasetsComponent implements OnInit {
   buildDatasets() {
     // let actual = null;
     let datasets: any = {}
-    if (!(Array.isArray(this.selectedDatasets))) {
-      this.selectedDatasets = [this.selectedDatasets]
+    let tmp_ds = this.selectedDatasets;
+    if (!(Array.isArray(tmp_ds))) {
+      tmp_ds = [tmp_ds]
     }
-    for (let selected of this.selectedDatasets) {
+    for (let selected of tmp_ds) {
       // if (selected.data.name == "Chomatin States Segmentation") {
       //   continue;
       // }

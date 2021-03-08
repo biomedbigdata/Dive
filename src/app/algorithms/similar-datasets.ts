@@ -119,7 +119,9 @@ export class SimilarDatasets {
         const biosource = deepBlueService.getBioSourceByName(ds.biosource);
         const em = deepBlueService.getEpigeneticMarkByName(ds.epigenetic_mark);
         const rank = ds.mean_rank;
-
+        if (biosource == null) {
+          continue;
+        }
         if (!(biosource.name in biosources)) {
           biosources[biosource.name] = [];
         }
