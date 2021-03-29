@@ -1245,12 +1245,12 @@ export class DeepBlueService {
                         );
                     } else if (request_type === 'go_enrichment') {
                         pollSubject.next(
-                            (<Object[]>(data[1])).filter((obj) => Object.keys(obj).length !== 0)
+                            (<Object[]>(data[1])).filter((obj) => obj !== null && obj !== undefined && Object.keys(obj).length !== 0)
                                 .map((ee) => DeepBlueMiddlewareGOEnrichtmentResult.fromObject(ee))
                         );
                     } else if (request_type === 'overlaps_enrichment_fast') {
                         pollSubject.next(
-                            (<Object[]>(data[1])).filter((obj) => Object.keys(obj).length !== 0)
+                            (<Object[]>(data[1])).filter((obj) => obj !== null && obj !== undefined && Object.keys(obj).length !== 0)
                                 .map((ee) => DeepBlueMiddlewareOverlapEnrichtmentResultItem.fromObject(ee))
                         );
                     } else if (request_type === 'overlaps_enrichment') {
@@ -1276,7 +1276,7 @@ export class DeepBlueService {
                         if (request_type === 'overlaps') {
                             partial = (<Object[]>(partial)).map((ee) => DeepBlueResult.fromObject(ee));
                         } else if (request_type === 'go_enrichment') {
-                            partial = (<Object[]>(partial)).filter((obj) => Object.keys(obj).length !== 0)
+                            partial = (<Object[]>(partial)).filter((obj) => obj !== null && obj !== undefined && Object.keys(obj).length !== 0)
                                 .map((ee) => DeepBlueMiddlewareGOEnrichtmentResult.fromObject(ee))
                         } else if (request_type === 'overlaps_enrichment_fast') {
                             partial = (<Object[]>(partial)).map((ee) => DeepBlueMiddlewareOverlapEnrichtmentResultItem.fromObject(ee))

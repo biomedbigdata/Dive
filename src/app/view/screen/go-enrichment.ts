@@ -122,7 +122,7 @@ export class GoEnrichmentScreenComponent implements AfterViewInit, OnDestroy {
             const row: any = value[idx];
             if ((row['gooverlap'] >= go_overlap) &&
                 (row['ratio'] >= ratio) &&
-                (row['pvalue'] < p_value)) {
+                (row['pvalue'] >= p_value)) {
                 filtered_data.push(row);
             }
         }

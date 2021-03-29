@@ -51,6 +51,7 @@
             <tr [ttRow]="rowNode" [ttSelectableRow]="rowNode">
                 <td>
                     <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
+                    <p-treeTableCheckbox [value]="rowNode" *ngIf="selectMode === 'checkbox'"></p-treeTableCheckbox>
                     {{rowData.name}}
                 </td>
                 <td>{{rowData.biosource}}</td>

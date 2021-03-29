@@ -166,7 +166,7 @@ export class GenesScreen implements AfterViewInit, OnDestroy {
       });
     }
 
-    console.log(categories);
+    // console.log(categories);
     this.overlapbarchart.setNewData(categories, series, result_by_dataset_stack);
   }
 

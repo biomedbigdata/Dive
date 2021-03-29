@@ -1,77 +1,91 @@
 <div class="ui-fluid">
-  <div [ngClass]="{'ui-g-12': true}">
-    <div class="card card-w-title">
-      <h1>Gene Ontology Enrichment</h1>
-      <div class="ui-g form-group">
-        <div class="ui-g-12 ui-md-3">
-          <label for="input">Annotation Name</label>
+    <div [ngClass]="{'ui-g-12': true}">
+        <div class="card card-w-title">
+            <h1>Gene Ontology Enrichment</h1>
+            <div class="ui-g form-group">
+                <div class="ui-g-12 ui-md-3">
+                    <label for="input">Annotation Name</label>
+                </div>
+                <div class="ui-g-12 ui-md-2">
+                    <p-dropdown #geneModelDropdown (onChange)="selectGeneModel($event)" [(ngModel)]="selectedGeneModel"
+                                [autoWidth]="false" [options]="menuGeneModel"
+                                filter="filter">
+                    </p-dropdown>
+                </div>
+            </div>
+
+            <div *ngIf="isWaiting" style="color: #03A9F4;">
+                <h1>Processing Gene Ontology Enrichment</h1>
+                <h2>It may take up a few minutes, please, wait.</h2>
+            </div>
+
+            <div *ngIf="!isWaiting">
+                <p-fieldset legend="Filtering">
+
+                    <div class="ui-g form-group">
+                        <div class="ui-g-12 ui-md-3">
+                            <label for="input">Mimimum number of overlapping genes with the GO term</label>
+                        </div>
+                        <div class="ui-g-12 ui-md-2">
+                            <input (ngModelChange)="filter_enrichment_data()" [(ngModel)]="filter_go_overlap" pInputText
+                                   placeholder="Mimimum number of GO term overlaps"
+                                   type="text"
+                            />
+                        </div>
+                    </div>
+
+                    <div class="ui-g form-group">
+                        <div class="ui-g-12 ui-md-3">
+                            <label for="input">Minimum ration of overlapping genes with the total number of genes
+                                (%) </label>
+                        </div>
+                        <div class="ui-g-12 ui-md-2">
+                            <input (ngModelChange)="filter_enrichment_data()" [(ngModel)]="filter_ratio" pInputText
+                                   placeholder="Mimimum ratio"
+                                   type="text"
+                            />
+                        </div>
+                    </div>
+
+                    <div class="ui-g form-group">
+                        <div class="ui-g-12 ui-md-3">
+                            <label for="input">Minimum p-value (-Log)</label>
+                        </div>
+                        <div class="ui-g-12 ui-md-2">
+                            <input (ngModelChange)="filter_enrichment_data()" [(ngModel)]="filter_p_value" pInputText
+                                   placeholder="P-value"
+                                   type="text"
+                            />
+                        </div>
+                    </div>
+                </p-fieldset>
+            </div>
+
+            <p>
+
+            </p>
+            <p-tabView #tabview (onChange)="onTabChange($event)">
+                <p-tabPanel header="Plot">
+                    <app-overlaps-bar-chart #overlapbarchart
+                                            (dataSelected)="setDataInfo($event)"></app-overlaps-bar-chart>
+                </p-tabPanel>
+                <p-tabPanel *ngFor="let data of enrichment_data; let i = index" [header]=selectedData.getStackname(i)>
+                    <a [data]='data' [filename]=" 'DIVE-result_' + selectedData.getStackname(i) + '_go_enrichment.csv'"
+                       csvLink>Download Table</a>
+                    <ngx-datatable (activate)="onTableClick($event)" [columnMode]="'force'" [columns]="columns"
+                                   [footerHeight]="50"
+                                   [headerHeight]="50" [limit]="10"
+                                   [rowHeight]="'auto'" [rows]='data' class='material'>
+                    </ngx-datatable>
+                </p-tabPanel>
+            </p-tabView>
         </div>
-        <div class="ui-g-12 ui-md-2">
-          <p-dropdown #geneModelDropdown [options]="menuGeneModel" [(ngModel)]="selectedGeneModel" filter="filter" [autoWidth]="false"
-            (onChange)="selectGeneModel($event)">
-          </p-dropdown>
-        </div>
-      </div>
-
-      <div style="color: #03A9F4;" *ngIf="isWaiting">
-        <h1>Processing Gene Ontology Enrichment</h1>
-        <h2>It may take up a few minutes, please, wait.</h2>
-      </div>
-
-      <div *ngIf="!isWaiting">
-        <p-fieldset legend="Filtering">
-
-          <div class="ui-g form-group">
-            <div class="ui-g-12 ui-md-3">
-              <label for="input">Mimimum number of overlapping genes with the GO term</label>
-            </div>
-            <div class="ui-g-12 ui-md-2">
-              <input type="text" pInputText [(ngModel)]="filter_go_overlap" placeholder="Mimimum number of GO term overlaps" (ngModelChange)="filter_enrichment_data()"
-              />
-            </div>
-          </div>
-
-          <div class="ui-g form-group">
-            <div class="ui-g-12 ui-md-3">
-              <label for="input">Minimum ration of overlapping genes with the total number of genes (%) </label>
-            </div>
-            <div class="ui-g-12 ui-md-2">
-              <input type="text" pInputText [(ngModel)]="filter_ratio" placeholder="Mimimum ratio" (ngModelChange)="filter_enrichment_data()"
-              />
-            </div>
-          </div>
-
-          <div class="ui-g form-group">
-              <div class="ui-g-12 ui-md-3">
-                <label for="input">P-Value (-Log)</label>
-              </div>
-              <div class="ui-g-12 ui-md-2">
-                <input type="text" pInputText [(ngModel)]="filter_p_value" placeholder="P-value" (ngModelChange)="filter_enrichment_data()"
-                />
-              </div>
-            </div>
-        </p-fieldset>
-      </div>
-
-      <p>
-
-      </p>
-      <p-tabView #tabview (onChange)="onTabChange($event)">
-        <p-tabPanel header="Plot">
-          <app-overlaps-bar-chart (dataSelected)="setDataInfo($event)" #overlapbarchart> </app-overlaps-bar-chart>
-        </p-tabPanel>
-        <p-tabPanel *ngFor="let data of enrichment_data; let i = index" [header]=selectedData.getStackname(i)>
-          <ngx-datatable class='material' [columns]="columns" [rows]='data' [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50"
-            [rowHeight]="'auto'" [limit]="10" (activate)="onTableClick($event)">
-          </ngx-datatable>
-        </p-tabPanel>
-      </p-tabView>
     </div>
-  </div>
 </div>
 
 
-<p-sidebar [(visible)]="showDataDetail" position="right" [baseZIndex]="10000" styleClass="ui-sidebar-md">
+<p-sidebar [(visible)]="showDataDetail" [baseZIndex]="10000" position="right" styleClass="ui-sidebar-md">
     <h1>Term: {{ selectedGoTerm }}</h1>
-    <p><button pButton type="button" (click)="filterOverlapping(selectedGoTerm)" label="Filter overlapping"></button>
+    <p>
+        <button (click)="filterOverlapping(selectedGoTerm)" label="Filter overlapping" pButton type="button"></button>
 </p-sidebar>

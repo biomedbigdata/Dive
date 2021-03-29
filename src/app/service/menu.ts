@@ -8,9 +8,8 @@ import {EpigeneticMark} from 'app/domain/deepblue';
 
 const BASIC_MENU: any[] = [
   { label: 'Data Wizard', icon: 'view_carousel', routerLink: ['/'] },
-  { label: 'Data Advanced', icon: 'format_list_bulleted', items: [
+  { label: 'Region Selection', icon: 'format_list_bulleted', items: [
       { label: 'Select Query', icon: 'format_list_bulleted', routerLink: ['/dataselection'] },
-      { label: 'Similar Data', icon: 'compare_arrows', routerLink: ['/similarfinder'] },
       { label: 'Comparison Selection', icon: 'compare', routerLink: ['comparisonselection'] },
       { label: 'Get regions', icon: 'dehaze', routerLink: ['/regions'] }
     ] },
@@ -20,6 +19,7 @@ const BASIC_MENU: any[] = [
       { name: 'columns', label: 'Columns Filtering', icon: 'view_week', items: [] }
     ] },
   { name: 'quick_overlaps', label: 'Quick Overlaps', icon: 'vertical_align_center', items: [
+      { label: 'Similar Data', icon: 'compare_arrows', routerLink: ['/similarfinder'] },
       { name: 'genes', label: 'Genes', icon: 'room', routerLink: ['/genes'] }] },
   { name: 'go_enrichment', label: 'Gene Ontology', icon: 'dashboard_customize', routerLink: ['/go_enrichment'] },
   { name: 'overlap_enrichment', label: 'Overlap Enrichment', icon: 'view_quilt', routerLink: ['/overlap_enrichment'] }

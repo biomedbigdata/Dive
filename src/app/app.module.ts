@@ -23,6 +23,7 @@ import { NgModule } from '@angular/core';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { OverlapEnrichmentScreenComponent } from 'app/view/screen/overlap-enrichment';
 import { OverlapsBarChartComponent } from 'app/view/component/charts/overlappingbar';
+import { LolaResultsBarChartComponent} from './view/component/charts/lolaresults';
 import { ProgressElement } from 'app/service/progresselement';
 import { RegionsScreen } from 'app/view/screen/regions';
 import { SelectedData } from 'app/service/selected-data';
@@ -220,6 +221,7 @@ import {CsvModule} from '@ctrl/ngx-csv';
         DataLoadProgressBar,
         DataSelectionMainComponent,
         OverlapsBarChartComponent,
+        LolaResultsBarChartComponent,
         SimilarityBarChartComponent,
         SelectAnnotationsComponent,
         SelectDatasetsComponent,
