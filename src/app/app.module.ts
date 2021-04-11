@@ -135,6 +135,7 @@ import { ConfirmationService } from 'primeng/components/common/confirmationservi
 import { TreeTableModule } from 'primeng/components/treetable/treetable';
 import { AutoCompleteModule } from 'primeng/components/autocomplete/autocomplete';
 import {CsvModule} from '@ctrl/ngx-csv';
+import {MessageModule} from 'primeng/message';
 
 @NgModule({
     imports: [
@@ -209,6 +210,7 @@ import {CsvModule} from '@ctrl/ngx-csv';
         CardModule,
         ColorPickerModule,
         CsvModule,
+        MessageModule,
         //Angulartics2Module.forRoot([Angulartics2GoogleAnalytics])
     ],
     declarations: [

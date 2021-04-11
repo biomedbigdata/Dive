@@ -128,6 +128,10 @@
                         <div *ngIf="enrichment_data.length > 0" class="card card-w-title">
                             <div *ngFor="let data of enrichment_data; let i = index">
                                 <h2> {{ selectedData.getStackname(i) }} </h2>
+                                <div *ngIf="hasNegativeEntries(data)">
+                                    <p-message severity="error" text="{{getDatasetsWithNegativeEntries(data)}}"></p-message>
+                                </div>
+                                <br>
                                 <a [data]='data'
                                    [filename]=" 'DIVE-result_' + selectedData.getStackname(i) + '_overlap_enrichment.csv'"
                                    csvLink>Download Table</a>

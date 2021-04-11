@@ -20,7 +20,7 @@ import {LolaResultsBarChartComponent} from '../component/charts/lolaresults';
 })
 export class OverlapEnrichmentWizard {
 
-    finished: boolean = true;
+    finished = true;
 
     background: IOperation;
     selected_datasets = new Array<Object>();
@@ -65,6 +65,7 @@ export class OverlapEnrichmentWizard {
         this.finished = true;
         this.enrichment_data = [];
         this.enrichment_data_from_server = [];
+        this.plotBar();
         this.startEnrichment();
     }
 
@@ -88,7 +89,7 @@ export class OverlapEnrichmentWizard {
 
     prepare_data(datum: DeepBlueMiddlewareOverlapEnrichtmentResult[]) {
 
-        this.lolaresultsbarchart.resize();
+        // this.lolaresultsbarchart.resize();
         this.enrichment_data_from_server = [];
 
         for (let pos = 0; pos < datum.length; pos++) {
@@ -115,14 +116,13 @@ export class OverlapEnrichmentWizard {
     filter_enrichment_data($event: any) {
         const newResults = [];
         for (let idx = 0; idx < this.enrichment_data_from_server.length; idx++) {
-            //const x = this.filter_enrichment_datei(this.enrichment_data_from_server[idx]);
+            // const x = this.filter_enrichment_datei(this.enrichment_data_from_server[idx]);
             const x = this.enrichment_data_from_server[idx];
             newResults.push(x);
         }
 
         this.enrichment_data = newResults;
         this.plotBar();
-        this.lolaresultsbarchart.resize();
     }
 
 
@@ -134,16 +134,38 @@ export class OverlapEnrichmentWizard {
     }
 
     getQuerys() {
-        let querys = this.selectedData.getStacksTopOperation();
+        const querys = this.selectedData.getStacksTopOperation();
         return querys;
     }
 
     getSelectedDatasets() {
-        let keys = [];
-        for (let key in this.selected_datasets) {
+        const keys = [];
+        for (const key in this.selected_datasets) {
             keys.push({key: key, value: this.selected_datasets[key]});
         }
         return keys;
+    }
+
+    hasNegativeEntries(data): boolean {
+        return data.some(d => (d['b'] < 0) || (d['d'] < 0));
+    }
+
+    getDatasetsWithNegativeEntries(data) {
+        const ds_negative = data.map(d => {
+            if ((d['b'] < 0) || (d['d'] < 0)) {
+                let ds;
+                if (d['description']) {
+                    ds = d['description'];
+                } else {
+                    ds = d['dataset'];
+                }
+                return ds;
+            }
+        });
+        return 'Negative b or d entries in table. This means either: ' +
+            '<br>1) Your user sets contain items outside your universe; or 2) your universe has a region that overlaps multiple ' +
+            'user set regions, interfering with the universe set overlap calculation. Dataset(s):<br>' +
+            ds_negative.join(', ');
     }
 
     plotBar() {
@@ -156,15 +178,19 @@ export class OverlapEnrichmentWizard {
         } = {};
 
         for (let stack_pos = 0; stack_pos < this.enrichment_data.length; stack_pos++) {
-            const data = this.enrichment_data[stack_pos];/*.sort(function (a, b) {
+            const data = this.enrichment_data[stack_pos]; /*.sort(function (a, b) {
                 return (a['oddsratio'] < b['oddsratio']) ? 1 : ((b['oddsratio'] < a['oddsratio']) ? -1 : 0);
             });*/
             const values_by_category: { [key: string]: any } = {};
 
             for (let ds_pos = 0; ds_pos < data.length; ds_pos++) {
                 const ds: any = data[ds_pos];
-
-                const category = ds['dataset'];
+                let category;
+                if (ds['description']) {
+                    category = ds['description'];
+                } else {
+                    category = ds['dataset'];
+                }
                 const oddsratio = ds['oddsratio'];
 
                 // If it is one of top 50 elements of the main stack
@@ -196,7 +222,6 @@ export class OverlapEnrichmentWizard {
                 result_by_dataset_stack[category][stack_pos] = category;
 
             }
-
             series.push({
                 name: this.selectedData.getStackname(stack_pos),
                 data: stack_values_result,
@@ -204,8 +229,7 @@ export class OverlapEnrichmentWizard {
             });
         }
         this.lolaresultsbarchart.setNewData(categories, series, result_by_dataset_stack);
-        // categories = ["positive regulation of transcription from RNA polymerase II promoter (GO:0045944)"
-        // Object {type: "column", name: "Cpg Islands", data: Array(50), color: "rgba(224,177,8,0.3)"}
+        this.lolaresultsbarchart.resize();
     }
 
     /*  removeSelectedDataset(key : string) {
